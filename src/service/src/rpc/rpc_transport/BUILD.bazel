@@ -1,0 +1,123 @@
+# Copyright 2021 Ant Group Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+package(default_visibility = ["//visibility:public"])
+
+load("//bazel:service.bzl", "service_cc_binary")
+load("//bazel:service.bzl", "service_cc_library")
+load("//bazel:service.bzl", "service_cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+
+
+#bazel build //src/rpc/rpc_transport:rpc_key_adpapter
+service_cc_library(
+    name = "rpc_key_adpapter",
+    srcs = ["rpc_key_adpapter.cc"],
+    hdrs = ["rpc_key_adpapter.h"],
+    deps = [
+        "@com_google_absl//absl/strings",
+        "@yacl//yacl/base:buffer",
+    ],
+)
+
+#bazel test //src/rpc/rpc_transport:rpc_key_adpapter_test
+service_cc_test(
+    name = "rpc_key_adpapter_test",
+    srcs = ["rpc_key_adpapter_test.cc"],
+    deps = [
+        ":rpc_key_adpapter",
+    ],
+)
+
+#bazel build //src/rpc/rpc_transport:rpc_receiver
+service_cc_library(
+    name = "rpc_receiver",
+    srcs = ["rpc_receiver.cc"],
+    hdrs = ["rpc_receiver.h"],
+    deps = [
+        ":rpc_key_adpapter",
+        "@com_github_brpc_brpc//:brpc",
+    ],
+)
+
+#bazel test //src/rpc/rpc_transport:rpc_receiver_test
+service_cc_test(
+    name = "rpc_receiver_test",
+    srcs = ["rpc_receiver_test.cc"],
+    deps = [
+        ":rpc_receiver",
+    ],
+)
+
+#bazel build //src/rpc/rpc_transport:rpc_sender
+service_cc_library(
+    name = "rpc_sender",
+    srcs = ["rpc_sender.cc"],
+    hdrs = ["rpc_sender.h"],
+    deps = [
+        ":rpc_key_adpapter",
+        "//src/rpc/proto:basicmeta_cc_proto",
+        "//src/rpc/proto:gatewaymeta_cc_proto",
+        "//src/rpc/proto:gatewayservice_cc_proto",
+        "@com_github_brpc_brpc//:brpc",
+    ],
+)
+
+#bazel test //src/rpc/rpc_transport:rpc_sender_test
+service_cc_test(
+    name = "rpc_sender_test",
+    srcs = ["rpc_sender_test.cc"],
+    deps = [
+        ":rpc_sender",
+    ],
+)
+
+#bazel build //src/rpc/rpc_transport:rpc_server
+service_cc_library(
+    name = "rpc_server",
+    srcs = ["rpc_server.cc"],
+    hdrs = ["rpc_server.h"],
+    deps = [
+        ":rpc_key_adpapter",
+        ":rpc_receiver",
+        "//src/rpc/proto:basicmeta_cc_proto",
+        "//src/rpc/proto:gatewaymeta_cc_proto",
+        "//src/rpc/proto:gatewayservice_cc_proto",
+        "//src/http_server/proto:http_cc_proto",
+        "@com_github_brpc_brpc//:brpc",
+    ],
+)
+
+#bazel build //src/rpc/rpc_transport:rpc_session
+service_cc_library(
+    name = "rpc_session",
+    srcs = ["rpc_session.cc"],
+    hdrs = ["rpc_session.h"],
+    deps = [
+        ":rpc_key_adpapter",
+        ":rpc_receiver",
+        ":rpc_sender",
+        ":rpc_server",
+        "@com_github_brpc_brpc//:brpc",
+    ],
+)
+
+#bazel test //src/rpc/rpc_transport:rpc_server_test
+service_cc_test(
+    name = "rpc_server_test",
+    srcs = ["rpc_server_test.cc"],
+    deps = [
+        ":rpc_session",
+        ":rpc_server",
+    ],
+)

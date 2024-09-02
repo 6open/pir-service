@@ -1,0 +1,47 @@
+workspace(name = "service")
+
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+
+load("//bazel:repositories.bzl", "service_deps")
+service_deps()
+load("@spulib//bazel:repositories.bzl", "spu_deps")
+spu_deps()
+load("@yacl//bazel:repositories.bzl", "yacl_deps")
+yacl_deps()
+
+
+load("@rules_foreign_cc//foreign_cc:repositories.bzl","rules_foreign_cc_dependencies")
+
+rules_foreign_cc_dependencies(
+    register_built_tools = False,
+    register_default_tools = False,
+    register_preinstalled_tools = True,
+)
+load("@xla//:workspace4.bzl", "xla_workspace4")
+
+xla_workspace4()
+
+load("@xla//:workspace3.bzl", "xla_workspace3")
+
+xla_workspace3()
+
+load("@xla//:workspace2.bzl", "xla_workspace2")
+
+xla_workspace2()
+
+load("@xla//:workspace1.bzl", "xla_workspace1")
+
+xla_workspace1()
+
+load("@xla//:workspace0.bzl", "xla_workspace0")
+
+xla_workspace0()
+
+load("@pybind11_bazel//:python_configure.bzl", "python_configure")
+
+python_configure(
+    name = "local_config_python",
+    python_version = "3",
+)

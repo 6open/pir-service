@@ -1,0 +1,138 @@
+2024-06-28 09:13:01,342 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12602
+ * Running on http://172.27.0.3:12602
+2024-06-28 09:13:01,342 INFO [33mPress CTRL+C to quit[0m
+2024-06-28 09:13:01,343 INFO  * Restarting with stat
+2024-06-28 09:13:01,712 WARNING  * Debugger is active!
+2024-06-28 09:13:01,713 INFO  * Debugger PIN: 443-657-408
+2024-06-28 09:23:51,991 INFO 127.0.0.1 - - [28/Jun/2024 09:23:51] "[33mGET / HTTP/1.1[0m" 404 -
+2024-06-29 05:48:26,951 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12602
+ * Running on http://172.27.0.3:12602
+2024-06-29 05:48:26,951 INFO [33mPress CTRL+C to quit[0m
+2024-06-29 05:48:26,952 INFO  * Restarting with stat
+2024-06-29 05:48:27,369 WARNING  * Debugger is active!
+2024-06-29 05:48:27,370 INFO  * Debugger PIN: 443-657-408
+2024-06-29 06:06:21,105 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12602
+ * Running on http://172.27.0.2:12602
+2024-06-29 06:06:21,105 INFO [33mPress CTRL+C to quit[0m
+2024-06-29 06:06:21,105 INFO  * Restarting with stat
+2024-06-29 06:06:21,524 WARNING  * Debugger is active!
+2024-06-29 06:06:21,525 INFO  * Debugger PIN: 892-625-477
+2024-06-29 07:55:09,967 INFO 127.0.0.1 - - [29/Jun/2024 07:55:09] "[33mGET / HTTP/1.1[0m" 404 -
+2024-06-29 07:55:43,481 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12602
+ * Running on http://172.27.0.2:12602
+2024-06-29 07:55:43,481 INFO [33mPress CTRL+C to quit[0m
+2024-06-29 07:55:43,481 INFO  * Restarting with stat
+2024-06-29 07:55:43,875 WARNING  * Debugger is active!
+2024-06-29 07:55:43,875 INFO  * Debugger PIN: 892-625-477
+2024-06-29 07:55:51,485 INFO 127.0.0.1 - - [29/Jun/2024 07:55:51] "[33mGET / HTTP/1.1[0m" 404 -
+2024-06-29 07:57:11,776 INFO 127.0.0.1 - - [29/Jun/2024 07:57:11] "[31m[1mGET /v1/service/pir/setup HTTP/1.1[0m" 405 -
+2024-06-29 08:01:30,107 INFO 127.0.0.1 - - [29/Jun/2024 08:01:30] "[33mGET / HTTP/1.1[0m" 404 -
+2024-06-29 08:01:35,244 INFO 172.27.0.1 - - [29/Jun/2024 08:01:35] "[33mGET / HTTP/1.1[0m" 404 -
+2024-06-29 08:04:10,386 INFO 127.0.0.1 - - [29/Jun/2024 08:04:10] "[31m[1mGET /v1/service/pir/setup HTTP/1.1[0m" 405 -
+2024-06-29 08:12:00,719 INFO 127.0.0.1 - - [29/Jun/2024 08:12:00] "[31m[1mGET /v1/service/pir/setup HTTP/1.0[0m" 405 -
+2024-06-29 08:13:13,637 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12602
+ * Running on http://172.27.0.2:12602
+2024-06-29 08:13:13,637 INFO [33mPress CTRL+C to quit[0m
+2024-06-29 08:13:13,637 INFO  * Restarting with stat
+2024-06-29 08:13:14,049 WARNING  * Debugger is active!
+2024-06-29 08:13:14,050 INFO  * Debugger PIN: 892-625-477
+2024-06-29 08:13:16,592 INFO 127.0.0.1 - - [29/Jun/2024 08:13:16] "[31m[1mGET /v1/service/pir/setup HTTP/1.0[0m" 405 -
+2024-06-29 08:21:25,517 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12602
+ * Running on http://172.27.0.2:12602
+2024-06-29 08:21:25,517 INFO [33mPress CTRL+C to quit[0m
+2024-06-29 08:21:25,518 INFO  * Restarting with stat
+2024-06-29 08:21:25,926 WARNING  * Debugger is active!
+2024-06-29 08:21:25,926 INFO  * Debugger PIN: 892-625-477
+2024-06-29 08:21:34,326 INFO 172.27.0.3 - - [29/Jun/2024 08:21:34] "[31m[1mGET /v1/service/pir/setup HTTP/1.0[0m" 405 -
+2024-06-29 08:22:25,963 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12602
+ * Running on http://172.27.0.2:12602
+2024-06-29 08:22:25,963 INFO [33mPress CTRL+C to quit[0m
+2024-06-29 08:22:25,963 INFO  * Restarting with stat
+2024-06-29 08:22:26,334 WARNING  * Debugger is active!
+2024-06-29 08:22:26,334 INFO  * Debugger PIN: 892-625-477
+2024-06-29 08:22:28,590 INFO 172.27.0.1 - - [29/Jun/2024 08:22:28] "[31m[1mGET /v1/service/pir/setup HTTP/1.1[0m" 405 -
+2024-06-29 08:22:42,631 INFO 172.27.0.1 - - [29/Jun/2024 08:22:42] "[35m[1mPOST /v1/service/pir/setup HTTP/1.1[0m" 500 -
+2024-06-29 08:24:10,504 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12602
+ * Running on http://172.27.0.2:12602
+2024-06-29 08:24:10,504 INFO [33mPress CTRL+C to quit[0m
+2024-06-29 08:24:10,504 INFO  * Restarting with stat
+2024-06-29 08:24:10,923 WARNING  * Debugger is active!
+2024-06-29 08:24:10,924 INFO  * Debugger PIN: 892-625-477
+2024-06-29 08:24:13,239 INFO 172.27.0.1 - - [29/Jun/2024 08:24:13] "POST /v1/service/pir/setup HTTP/1.1" 200 -
+2024-06-29 08:24:35,034 INFO 172.27.0.3 - - [29/Jun/2024 08:24:35] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 08:35:26,071 INFO  * Detected change in '/home/admin/src/python/load-s3data.py', reloading
+2024-06-29 08:35:26,175 INFO  * Restarting with stat
+2024-06-29 08:35:26,550 WARNING  * Debugger is active!
+2024-06-29 08:35:26,551 INFO  * Debugger PIN: 892-625-477
+2024-06-29 08:35:29,998 INFO 172.27.0.3 - - [29/Jun/2024 08:35:29] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 08:41:59,441 INFO  * Detected change in '/home/admin/src/python/load-s3data.py', reloading
+2024-06-29 08:41:59,620 INFO  * Restarting with stat
+2024-06-29 08:42:00,033 WARNING  * Debugger is active!
+2024-06-29 08:42:00,033 INFO  * Debugger PIN: 892-625-477
+2024-06-29 08:42:37,263 INFO 172.27.0.3 - - [29/Jun/2024 08:42:37] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 08:43:40,503 INFO  * Detected change in '/home/admin/src/python/load-s3data.py', reloading
+2024-06-29 08:43:40,642 INFO  * Restarting with stat
+2024-06-29 08:43:41,083 WARNING  * Debugger is active!
+2024-06-29 08:43:41,088 INFO  * Debugger PIN: 892-625-477
+2024-06-29 08:43:47,440 INFO 172.27.0.3 - - [29/Jun/2024 08:43:47] "[35m[1mPOST /v1/service/pir/setup HTTP/1.0[0m" 500 -
+2024-06-29 08:44:11,247 INFO  * Detected change in '/home/admin/src/python/load-s3data.py', reloading
+2024-06-29 08:44:11,359 INFO  * Restarting with stat
+2024-06-29 08:44:11,742 WARNING  * Debugger is active!
+2024-06-29 08:44:11,743 INFO  * Debugger PIN: 892-625-477
+2024-06-29 08:44:14,761 INFO  * Detected change in '/home/admin/src/python/load-s3data.py', reloading
+2024-06-29 08:44:14,820 INFO  * Restarting with stat
+2024-06-29 08:44:15,194 WARNING  * Debugger is active!
+2024-06-29 08:44:15,195 INFO  * Debugger PIN: 892-625-477
+2024-06-29 08:44:16,879 INFO 172.27.0.3 - - [29/Jun/2024 08:44:16] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 08:45:01,548 INFO 172.27.0.3 - - [29/Jun/2024 08:45:01] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 08:45:53,598 INFO 172.27.0.3 - - [29/Jun/2024 08:45:53] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 08:47:01,355 INFO 172.27.0.3 - - [29/Jun/2024 08:47:01] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 08:51:40,654 INFO 172.27.0.3 - - [29/Jun/2024 08:51:40] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 09:40:49,504 INFO  * Detected change in '/home/admin/src/python/load-s3data.py', reloading
+2024-06-29 09:40:49,663 INFO  * Restarting with stat
+2024-06-29 09:40:50,069 WARNING  * Debugger is active!
+2024-06-29 09:40:50,070 INFO  * Debugger PIN: 892-625-477
+2024-06-29 09:41:05,143 INFO  * Detected change in '/home/admin/src/python/load-s3data.py', reloading
+2024-06-29 09:41:05,236 INFO  * Restarting with stat
+2024-06-29 09:41:05,688 WARNING  * Debugger is active!
+2024-06-29 09:41:05,689 INFO  * Debugger PIN: 892-625-477
+2024-06-29 09:41:34,682 INFO 172.27.0.3 - - [29/Jun/2024 09:41:34] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 09:42:23,046 INFO  * Detected change in '/home/admin/src/python/load-s3data.py', reloading
+2024-06-29 09:42:23,182 INFO  * Restarting with stat
+2024-06-29 09:42:23,609 WARNING  * Debugger is active!
+2024-06-29 09:42:23,610 INFO  * Debugger PIN: 892-625-477
+2024-06-29 09:42:47,393 INFO 172.27.0.3 - - [29/Jun/2024 09:42:47] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 09:42:57,770 INFO  * Detected change in '/home/admin/src/python/load-s3data.py', reloading
+2024-06-29 09:42:57,909 INFO  * Restarting with stat
+2024-06-29 09:42:58,327 WARNING  * Debugger is active!
+2024-06-29 09:42:58,327 INFO  * Debugger PIN: 892-625-477
+2024-06-29 09:46:18,446 INFO 172.27.0.3 - - [29/Jun/2024 09:46:18] "[31m[1mPOST /v1/service/pir/setup HTTP/1.0[0m" 400 -
+2024-06-29 09:47:35,989 INFO 172.27.0.3 - - [29/Jun/2024 09:47:35] "[35m[1mPOST /v1/service/pir/setup HTTP/1.0[0m" 500 -
+2024-06-29 09:52:04,227 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12602
+ * Running on http://172.27.0.2:12602
+2024-06-29 09:52:04,227 INFO [33mPress CTRL+C to quit[0m
+2024-06-29 09:52:04,228 INFO  * Restarting with stat
+2024-06-29 09:52:04,599 WARNING  * Debugger is active!
+2024-06-29 09:52:04,599 INFO  * Debugger PIN: 892-625-477
+2024-06-29 09:53:06,674 INFO 172.27.0.3 - - [29/Jun/2024 09:53:06] "[35m[1mPOST /v1/service/pir/setup HTTP/1.0[0m" 500 -
+2024-06-29 09:53:50,884 INFO 172.27.0.3 - - [29/Jun/2024 09:53:50] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 09:53:58,204 INFO 172.27.0.3 - - [29/Jun/2024 09:53:58] "POST /v1/service/pir/setup HTTP/1.0" 200 -
+2024-06-29 09:55:45,832 INFO 172.27.0.3 - - [29/Jun/2024 09:55:45] "POST /v1/service/pir/setup HTTP/1.0" 200 -

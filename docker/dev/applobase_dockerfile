@@ -1,0 +1,29 @@
+FROM apollo-python:base as linmpc
+#docker build --tag lin:mpc  --target linmpc .
+#docker run -v /home/hz_dev/linjunmian/develop/mpc/src:/app/src -v /home/hz_dev/linjunmian/develop/mpc/cache:/root/.cache/bazel -it lin:mpc /bin/bash
+
+
+WORKDIR /app
+COPY requirements.txt /app/requirements.txt
+#COPY pyrustecdh-0.1.3-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl /app/
+RUN pip install -r /app/requirements.txt -i https://mirrors.aliyun.com/pypi/simple
+#RUN pip install -r /app/requirements.txt -i https://mirrors.aliyun.com/pypi/simple \
+#    && pip install pyrustecdh-0.1.3-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+RUN yum install -y centos-release-scl
+RUN yum install -y devtoolset-11-gcc*
+RUN yum install -y unzip
+RUN scl enable devtoolset-11 bash
+RUN yum install -y git
+#RUN wget --no-check-certificate https://copr.fedorainfracloud.org/coprs/vbatts/bazel/repo/epel-7/vbatts-bazel-epel-7.repo \
+#    && cp vbatts-bazel-epel-7.repo /etc/yum.repos.d/ \
+#    && yum install -y bazel4
+COPY tools  /app/tools
+RUN cd /app/tools/ninja \
+    && ./configure.py --bootstrap \
+    && cp ninja /bin/
+RUN cd /app/tools \
+    && chmod 755 bazel_nojdk-5.4.0-linux-x86_64 \
+    && mv bazel_nojdk-5.4.0-linux-x86_64 /usr/bin/bazel 
+#COPY src  /app/src
+# bazel test //...
+CMD [ "/bin/bash" ]

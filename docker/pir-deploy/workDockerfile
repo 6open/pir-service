@@ -1,0 +1,10 @@
+FROM mpc-pir-base:1.0.0
+# FROM pir-s3-base:1.0.0
+
+COPY mpc-service /app
+WORKDIR /app
+
+# ENTRYPOINT ["bash", "-c", "nginx && python3 /app/s3-proxy.py & /app/http_server"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
+
+# CMD ["tail", "-f", "/dev/null"]

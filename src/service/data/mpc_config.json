@@ -1,0 +1,15 @@
+{
+    "grpcConfig": {
+        "otherPort": 12600,
+        "selfPort": 12600
+    },
+    "logConfig": {
+        "path": "/home/app/logs/pir_log"
+    },
+    "proxyConfig": {
+        "gatewayConfig": {
+            "port": 12000
+        },
+        "proxyMode": 0
+    }
+}

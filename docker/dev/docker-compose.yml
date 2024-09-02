@@ -1,0 +1,16 @@
+version: '3'
+services:
+  lk-dev-1k:
+    container_name: mscp-lk-1k
+    image: mpc:mscp-dev
+    cap_add:
+      - SYS_PTRACE
+    ports:
+      - "12601:12601"
+      - "12602:12602"
+    environment:
+      - MLFLOW_TRACKING_URI=http://192.168.50.10:8999
+    volumes:
+      - "$PWD/../../src:/home/admin/src"
+      - "$PWD/../../bin:/home/admin/bin"
+      - "/data/lk/mpc_dev-1k:/data/storage/dataset/pre_deal_result"

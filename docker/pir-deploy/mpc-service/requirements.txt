@@ -1,0 +1,5 @@
+flask
+botocore
+boto3
+polars
+requests

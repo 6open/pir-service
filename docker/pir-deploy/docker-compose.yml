@@ -1,0 +1,23 @@
+version: '3.0'
+services:
+  pir-1k:
+    # container_name: nvx-pir-service
+    # image: 192.168.50.32/mpc-dev/mpc-pir:1.0
+    
+    container_name: nvx-pir
+    image: 192.168.50.32/mpc-dev/mpc-pir:1.0.2
+    # image: encrypted-container-setup
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - /dev/fuse:/dev/fuse
+    privileged: true
+    ports:
+      - "12610:12600"  # grpc_port
+      - "12611:80"  # nginx代理-pir服务
+    environment:
+      - MLFLOW_TRACKING_URI=http://192.168.50.10:8999
+    volumes:
+      - "/data/storage:/data/storage"
+      - "/home/app/logs/pir_log:/home/app/logs/pir_log" 
+    # command: tail -f /dev/null

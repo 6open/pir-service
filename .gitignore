@@ -1,0 +1,8 @@
+log/
+.vscode/
+bin/
+http_server
+src/test
+test
+docker/pir-deploy/mpc-service/http_server
+src/service/http_server

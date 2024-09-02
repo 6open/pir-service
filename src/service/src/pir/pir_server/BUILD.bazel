@@ -1,0 +1,107 @@
+# Copyright 2021 Ant Group Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+package(default_visibility = ["//visibility:public"])
+load("//bazel:service.bzl", "service_cc_binary")
+load("//bazel:service.bzl", "service_cc_library")
+load("//bazel:service.bzl", "service_cc_test")
+
+#bazel build //src/pir/pir_server:pir_server_base
+service_cc_library(
+    name = "pir_server_base",
+    hdrs = ["pir_server.h"],
+    srcs = ["pir_server.cc"],
+    deps = [
+        "//src/pir:pir_service_cc_proto",
+        "//src/config:config",
+        "//src/http_server/api_service:utils",
+        "//src/pir/pir_data_handler:pir_data_handler_base",
+    ],
+)
+
+
+#bazel build //src/pir/pir_server:pir_server_spu
+service_cc_library(
+    name = "pir_server_spu",
+    hdrs = ["pir_server_spu.h"],
+    srcs = [],
+    deps = [
+        ":pir_server_base",
+        "//src/pir/pir_data_handler:pir_data_handler_spu",
+        "@spulib//libspu/pir",
+    ],
+)
+
+#bazel build //src/pir/pir_server:pir_server_base_fse
+service_cc_library(
+    name = "pir_server_base_fse",
+    hdrs = ["pir_server.h"],
+    srcs = ["pir_server_base_fse.cc"],
+    deps = [
+        "//src/pir:pir_service_cc_proto",
+        "//src/config:config",
+        "//src/util:mock_spu_utils",
+    ],
+)
+
+#bazel build //src/pir/pir_server:pir_server_se
+service_cc_library(
+    name = "pir_server_se",
+    hdrs = ["pir_server_se.h"],
+    srcs = ["pir_server_se.cc"],
+    deps = [
+        ":pir_server_base",
+        "//src/pir:pir_utils",
+        "//src/pir/pir_data_handler:pir_data_handler_se",
+        "//src/util:mock_spu_utils",
+    ],
+)
+
+#bazel build //src/pir/pir_server:pir_server_se_net
+service_cc_library(
+    name = "pir_server_se_net",
+    hdrs = ["pir_server_se_net.h"],
+    srcs = ["pir_server_se_net.cc"],
+    deps = [
+        ":pir_server_base",
+        "//src/pir:pir_utils",
+        "//src/pir/pir_data_handler:pir_data_handler_se",
+        "//src/rpc/rpc_transport:rpc_session",
+        "//src/kernel/data_db:db_server",
+    ],
+)
+
+#bazel build //src/pir/pir_server:pir_server
+service_cc_library(
+    name = "pir_server",
+    hdrs = ["pir_server_factory.h"],
+    deps = [
+        ":pir_server_base",
+        ":pir_server_spu",
+    ],
+)
+
+#bazel build //src/pir/pir_server:pir_server_fse
+service_cc_library(
+    name = "pir_server_fse",
+    hdrs = ["pir_server_factory_fse.h"],
+    srcs = ["pir_server_factory_fse.cc"],
+    deps = [
+        # ":pir_server_without_context",
+        ":pir_server_base",
+        ":pir_server_se_net",
+        "//src/pir/pir_data_handler:pir_data_handler_base",
+        "//src/pir/pir_data_handler:pir_data_handler_se",
+    ],
+)

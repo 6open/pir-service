@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "src/rpc/proto/basic-meta.proto";
+import "src/rpc/proto/gateway-meta.proto";
+package com.nvxclouds.apollo.gateway.api.service.proto;
+
+// option java_outer_classname = "TransferServiceProto";
+option cc_generic_services = true;
+
+service TransferService {
+    rpc send(com.nvxclouds.apollo.gateway.api.meta.basic.TransferMeta) returns (com.nvxclouds.apollo.gateway.api.meta.basic.ReturnStatus);
+    rpc recv(com.nvxclouds.apollo.gateway.api.meta.basic.TransferMeta) returns (com.nvxclouds.apollo.gateway.api.meta.basic.TransferMeta);
+
+    rpc checkStatusNow (com.nvxclouds.apollo.gateway.api.meta.basic.TransferMeta) returns (com.nvxclouds.apollo.gateway.api.meta.basic.TransferMeta);   // check the transfer status, return immediately
+}
+
+
+service NetworkDataTransferProxyService {
+    rpc push(com.nvxclouds.apollo.gateway.api.meta.basic.TransferMeta) returns (com.nvxclouds.apollo.gateway.api.meta.basic.ReturnStatus);
+
+    rpc pushData(stream com.nvxclouds.apollo.gateway.api.meta.basic.TransferMeta) returns (stream com.nvxclouds.apollo.gateway.api.meta.basic.TransferMeta);
+}

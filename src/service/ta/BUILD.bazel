@@ -1,0 +1,57 @@
+# Copyright 2021 Ant Group Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+package(default_visibility = ["//visibility:public"])
+
+load("//bazel:service.bzl", "service_cc_binary")
+load("//bazel:service.bzl", "service_cc_library")
+load("//bazel:service.bzl", "service_cc_test")
+
+#bazel build //ta:pir_data_generator
+
+service_cc_library(
+    name = "pir_data_generator",
+    srcs = ["pir_data_generator.cc"],
+    hdrs = ["pir_data_generator.h",
+            "pir_result_collector.h",
+            ],
+    deps = [
+        "//src/kernel/data_db:time_profiler_cc_proto",
+        "@com_google_absl//absl/strings",
+        "@yacl//yacl/crypto/utils:rand",
+    ],
+)
+#bazel test //ta:pir_multi_query
+
+service_cc_test(
+    name = "pir_multi_query",
+    srcs = ["pir_multi_query.cc"],
+    deps = [
+        "//src/http_server/proto:http_cc_proto",
+        "//src/config:config",
+        "pir_data_generator",
+        "//src/rpc/rpc_transport:rpc_server",
+        "@com_github_brpc_brpc//:brpc",
+        "@spulib//libspu/core:logging",
+    ],
+)
+
+#bazel run //ta:gen
+service_cc_binary(
+    name = "gen",
+    deps = [
+        "pir_data_generator",
+    ],
+)

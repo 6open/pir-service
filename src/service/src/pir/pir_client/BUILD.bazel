@@ -1,0 +1,128 @@
+# Copyright 2021 Ant Group Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+package(default_visibility = ["//visibility:public"])
+load("//bazel:service.bzl", "service_cc_binary")
+load("//bazel:service.bzl", "service_cc_library")
+load("//bazel:service.bzl", "service_cc_test")
+
+
+cc_library(
+    name = "libcurl",
+    hdrs = [],
+    includes = ["/usr/include"],
+    linkopts = ["-lcurl"],
+    visibility = ["//visibility:public"],
+)
+
+
+service_cc_library(
+    name = "pir_client_base",
+    hdrs = ["pir_client.h"],
+    srcs = ["pir_client.cc", "mlflow_client.cc"],
+    deps = [
+        "//src/pir:pir_service_cc_proto",
+        "//src/config:config",
+        "//src/http_server/api_service:utils",
+        "//src/util:time_statistics",
+        ":libcurl",
+    ],
+    linkopts = ["-lcurl"],
+)
+
+#bazel build //src/pir/pir_client:pir_client_spu
+service_cc_library(
+    name = "pir_client_spu",
+    hdrs = ["pir_client_spu.h"],
+    srcs = [],
+    deps = [
+        ":pir_client_base",
+        "@spulib//libspu/pir",
+    ],
+)
+
+#bazel build //src/pir/pir_client:pir_client
+service_cc_library(
+    name = "pir_client",
+    hdrs = ["pir_client_factory.h"],
+    deps = [
+        ":pir_client_base",
+        ":pir_client_spu",
+    ],
+)
+
+
+###########################fse
+
+#bazel build //src/pir/pir_client:pir_client_base_fse
+service_cc_library(
+    name = "pir_client_base_fse",
+    hdrs = ["pir_client.h"],
+    srcs = ["pir_client_base_fse.cc"],
+    deps = [
+        "//src/pir:pir_service_cc_proto",
+        "//src/config:config",
+        "//src/util:mock_spu_utils",
+        "@com_github_brpc_brpc//:brpc",
+        # "//src/util:time_statistics",
+    ],
+)
+
+#bazel build //src/pir/pir_client:pir_client_se
+service_cc_library(
+    name = "pir_client_se",
+    hdrs = ["pir_client_se.h"],
+    srcs = ["pir_client_se.cc"],
+    deps = [
+        ":pir_client_base",
+        "//src/pir:pir_utils",
+        "//src/pir:pir_fse_prama", 
+        "//src/util:mock_spu_utils",
+        "@nvclouds_apsi//:apsi_lib",
+        "@yacl//yacl/io/rw:rw",
+    ],
+)
+
+#bazel build //src/pir/pir_client:pir_client_se_net
+service_cc_library(
+    name = "pir_client_se_net",
+    hdrs = ["pir_client_se_net.h"],
+    srcs = ["pir_client_se_net.cc"],
+    deps = [
+        ":pir_client_base",
+        "//src/pir:pir_utils",
+        "//src/pir:pir_fse_prama", 
+        "@nvclouds_apsi//:apsi_lib",
+        "@yacl//yacl/io/rw:rw",
+        "//src/rpc/rpc_transport:rpc_session",
+        "//src/kernel/data_db:db_client",
+    ],
+)
+
+#bazel build //src/pir/pir_client:pir_client_fse
+service_cc_library(
+    name = "pir_client_fse",
+    hdrs = ["pir_client_factory_fse.h"],
+    srcs = ["pir_client_factory_fse.cc"],
+    deps = [
+        ":pir_client_base",
+        ":pir_client_se_net",
+    ],
+)
+
+service_cc_library(
+    name = "mlflow_client",
+    hdrs = ["mlflow_client.h"],
+    srcs = ["mlflow_client.cc"],
+)

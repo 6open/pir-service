@@ -1,0 +1,13 @@
+version: '3.0'
+services:
+  mcsp_service:
+    container_name: nvx-pir-test
+    image: 192.168.50.32/mpc-dev/mpc-pir-test
+    ports:
+      - "12650:12600"  # grpc_port
+      - "12651:12601"  # https_port
+    volumes:
+      - "/data/storage:/data/storage"
+      - "/home/app/logs/pir_log:/home/app/logs/pir_log" 
+    command: tail -f /dev/null
+

@@ -1,0 +1,81 @@
+# Copyright 2021 Ant Group Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+package(default_visibility = ["//visibility:public"])
+load("//bazel:service.bzl", "service_cc_binary")
+load("//bazel:service.bzl", "service_cc_library")
+load("//bazel:service.bzl", "service_cc_test")
+
+
+#bazel build //src/pir/pir_data_handler:pir_data_handler_base
+service_cc_library(
+    name = "pir_data_handler_base",
+    hdrs = ["pir_data_handler.h"],
+    srcs = ["pir_data_handler.cc"],
+    deps = [
+        "//src/pir:pir_service_cc_proto",
+        "//src/pir:pir_utils",
+        "//src/config:config",
+        "//src/http_server/api_service:utils",
+        "@spulib//libspu/core:logging",
+    ],
+)
+
+#bazel build //src/pir/pir_data_handler:pir_data_handler_spu
+service_cc_library(
+    name = "pir_data_handler_spu",
+    hdrs = ["pir_data_handler_spu.h"],
+    srcs = ["pir_data_handler_spu.cc"],
+    deps = [
+        ":pir_data_handler_base",
+        "@spulib//libspu/pir",
+    ],
+)
+
+#bazel build //src/pir/pir_data_handler:pir_data_handler_se
+service_cc_library(
+    name = "pir_data_handler_se",
+    hdrs = ["pir_data_handler_se.h"],
+    srcs = ["pir_data_handler_se.cc"],
+    deps = [
+        ":pir_data_handler_base",
+        "@nvclouds_apsi//:apsi_lib",
+        "@yacl//yacl/io/rw:rw",
+        "//src/pir:pir_fse_prama",
+        "//src/kernel/data_db:db_meta",
+    ],
+)
+
+#bazel build //src/pir/pir_data_handler:pir_data_handler
+service_cc_library(
+    name = "pir_data_handler",
+    hdrs = ["pir_data_handler_factory.h"],
+    deps = [
+        ":pir_data_handler_base",
+        ":pir_data_handler_spu",
+        # ":pir_data_handler_se",
+    ],
+)
+
+#bazel build //src/pir/pir_data_handler:pir_data_handler_fse
+service_cc_library(
+    name = "pir_data_handler_fse",
+    hdrs = ["pir_data_handler_factory_fse.h"],
+    srcs = ["pir_data_handler_factory_fse.cc"],
+    deps = [
+        ":pir_data_handler_base",
+        # ":pir_data_handler_spu",
+        ":pir_data_handler_se",
+    ],
+)

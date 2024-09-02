@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package com.nvxclouds.apollo.gateway.api.meta.basic;
+option cc_generic_services = true;
+
+
+// network endpoint
+message Endpoint {
+    string url = 1;         // url
+    string ip = 2;          // ip address
+    int32 port = 3;         // port
+    string hostname = 4;    // host name
+    string protocol = 5;    // protocol
+}
+
+message Endpoints {
+    repeated Endpoint endpoints = 1;
+}
+
+// Transmission content
+message ResponseContent {
+    string objectData = 1; // Small data type carrier
+    bytes objectByteData = 2; // Binary data carrier of small data type
+}
+
+// generic return status
+message ReturnStatus {
+    int32 code = 1;//
+    string message = 2;//
+    string sessionId = 3;
+    string data = 4;//
+    ResponseContent content = 5;
+}

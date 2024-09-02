@@ -1,0 +1,120 @@
+# Copyright 2021 Ant Group Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+package(default_visibility = ["//visibility:public"])
+
+load("//bazel:service.bzl", "service_cc_binary")
+load("//bazel:service.bzl", "service_cc_library")
+load("//bazel:service.bzl", "service_cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+
+cc_proto_library(
+    name = "ic_transport_proto",
+    deps = ["@org_interconnection//interconnection/link"],
+)
+
+#bazel build //src/rpc:channel_brpc_gateway
+service_cc_library(
+    name = "channel_brpc_gateway",
+    srcs = ["channel_brpc_gateway.cc"],
+    hdrs = ["channel_brpc_gateway.h"],
+    deps = [
+        ":ic_transport_proto",
+        "//src/rpc/proto:basicmeta_cc_proto",
+        "//src/rpc/proto:gatewaymeta_cc_proto",
+        "//src/rpc/proto:gatewayservice_cc_proto",
+        "@yacl//yacl/link/transport:channel",
+        "@com_github_brpc_brpc//:brpc",
+    ],
+)
+
+#bazel build //src/rpc:service_call
+service_cc_library(
+    name = "service_call",
+    srcs = ["service_call.cc"],
+    hdrs = ["service_call.h"],
+    deps = [
+        ":ic_transport_proto",
+        ":channel_brpc_gateway",
+        "//src/rpc/proto:basicmeta_cc_proto",
+        "//src/rpc/proto:gatewaymeta_cc_proto",
+        "//src/rpc/proto:gatewayservice_cc_proto",
+        "@yacl//yacl/link/transport:channel",
+        "@com_github_brpc_brpc//:brpc",
+    ],
+)
+
+
+#bazel build //src/rpc:receiver_brpc_gateway
+service_cc_library(
+    name = "receiver_brpc_gateway",
+    srcs = ["receiver_brpc_gateway.cc"],
+    hdrs = ["receiver_brpc_gateway.h"],
+    deps = [
+        ":ic_transport_proto",
+        ":service_call",
+        "//src/rpc/proto:basicmeta_cc_proto",
+        "//src/rpc/proto:gatewaymeta_cc_proto",
+        "//src/rpc/proto:gatewayservice_cc_proto",
+        "@yacl//yacl/link/transport:channel",
+        "@spulib//libspu/core:logging",
+        "@com_github_brpc_brpc//:brpc",
+    ],
+)
+
+#bazel build //src/rpc:factory_brpc_gateway
+service_cc_library(
+    name = "factory_brpc_gateway",
+    srcs = ["factory_brpc_gateway.cc"],
+    hdrs = ["factory_brpc_gateway.h"],
+    deps = [
+        "@yacl//yacl/link:factory",
+        ":channel_brpc_gateway",
+        ":receiver_brpc_gateway",
+        ":service_call",
+    ],
+)
+
+#bazel build //src/rpc:gateway_proxy_mock
+service_cc_library(
+    name = "gateway_proxy_mock",
+    srcs = ["gateway_proxy_mock.cc"],
+    hdrs = ["gateway_proxy_mock.h"],
+    deps = [
+        "@com_github_brpc_brpc//:brpc",
+        "//src/rpc/proto:basicmeta_cc_proto",
+        "//src/rpc/proto:gatewaymeta_cc_proto",
+        "//src/rpc/proto:gatewayservice_cc_proto",
+    ],
+)
+
+#bazel test //src/rpc:channel_brpc_gateway_test
+service_cc_test(
+    name = "channel_brpc_gateway_test",
+    srcs = ["channel_brpc_gateway_test.cc"],
+    deps = [
+        ":channel_brpc_gateway",
+        ":receiver_brpc_gateway",
+    ],
+)
+
+#bazel test //src/rpc:gateway_proxy_test
+service_cc_test(
+    name = "gateway_proxy_test",
+    srcs = ["gateway_proxy_test.cc"],
+    deps = [
+        ":channel_brpc_gateway",
+        ":receiver_brpc_gateway",
+        ":gateway_proxy_mock",
+    ],
+)

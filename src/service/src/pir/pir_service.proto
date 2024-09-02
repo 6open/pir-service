@@ -1,0 +1,147 @@
+// Licensed to the Apache Software Foundation (ASF) under one
+// or more contributor license agreements.  See the NOTICE file
+// distributed with this work for additional information
+// regarding copyright ownership.  The ASF licenses this file
+// to you under the Apache License, Version 2.0 (the
+// "License"); you may not use this file except in compliance
+// with the License.  You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless  by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
+syntax="proto3";
+package mpc.pir;
+
+//load
+message PirSetupRequest{
+    string version = 1;
+    string task_id = 2;
+    string data_file = 3;
+    string algorithm = 4;
+    repeated string fields = 5;
+    repeated string labels = 6;
+    string callback_url = 7;
+};
+
+message PirSetupResponse {
+    uint32 status = 1;
+    string task_id = 2;
+    string message = 3;
+    string key = 4;
+    uint32 spend = 5;
+};
+
+message PirRemoveRequest {
+    string version = 1;
+    string task_id = 2;
+    string key = 3;
+};
+
+message PirRemoveResponse {
+    uint32 status = 1;
+    string task_id = 2;
+    string message = 3;
+};
+
+
+//被查询 request
+message PirServerRequest {
+    string version = 1;
+    string task_id = 2;
+    string key = 3;
+    string algorithm = 4;
+    uint32 rank = 5;
+    repeated string members = 6;
+    repeated string ips = 7;
+    bool testlocal = 8;
+};
+
+message PirServerResponse {
+    uint32 status = 1;
+    string task_id = 2;
+    string message = 3;
+    uint32 spend = 4;
+}
+
+
+message PirClientRequest {
+    string version = 1;
+    string task_id = 2;
+    string algorithm = 3;
+    repeated string fields = 4;
+    repeated string labels = 5;
+    uint32 rank = 6;
+    repeated string members = 7;
+    repeated string ips = 8;
+    string key = 9;
+    string callback_url = 10;
+    bool testlocal = 11;
+    string data_file = 12;
+    string query_ids = 13;
+};
+
+message PirClientResponse {
+    uint32 status = 1;
+    string task_id = 2;
+    string message = 3;
+};
+
+message PirSetupResult {
+    string key = 1;
+    string algorithm = 2;
+};
+
+message PirSetupCallbackRequest {
+    uint32 status = 1;
+    string task_id = 2;
+    string service_type = 3;
+    string message = 4;
+    uint32 spend = 6;
+    PirSetupResult data_result = 7;
+};
+
+message PirSetupCallbackResponse {
+    uint32 code = 1;
+    string message = 2;
+    uint32 spend = 3;
+};
+
+message PirDataResult {
+    string dataset_name = 1;
+    string key = 2;
+//    repeated KeyValue content = 3;
+    string content = 3;
+};
+
+message PirDataValue {
+    repeated string values = 1;
+}
+
+message PirDataContent {
+    map<string, PirDataValue> data_content = 1;
+}
+
+message PirCallbackRequest {
+    uint32 status = 1;
+    string task_id = 2;
+    string service_type = 3;
+    string message = 4;
+    uint32 spend = 5;
+    string server_profile = 6;
+    string client_profile = 7;
+    repeated PirDataContent data_result = 8;
+    string part_result_file = 9;
+    string full_result_file = 10;
+};
+
+message PirCallbackResponse {
+    uint32 code = 1;
+    string message = 2;
+    uint32 spend = 3;
+};

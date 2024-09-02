@@ -1,0 +1,196 @@
+# Copyright 2021 Ant Group Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+package(default_visibility = ["//visibility:public"])
+
+load("//bazel:service.bzl", "service_cc_binary")
+load("//bazel:service.bzl", "service_cc_library")
+load("//bazel:service.bzl", "service_cc_test")
+
+
+#bazel build //src/kernel/data_db:batch_writer
+service_cc_library(
+    name = "batch_writer",
+    srcs = ["batch_writer.cc"],
+    hdrs = ["batch_writer.h"],
+    deps = [
+        "@com_google_absl//absl/strings",
+    ],
+)
+
+#bazel test //src/kernel/data_db:batch_writer_test
+service_cc_test(
+    name = "batch_writer_test",
+    srcs = ["batch_writer_test.cc"],
+    deps = [
+        "batch_writer",
+        "@yacl//yacl/io/rw:rw",
+        "@spulib//libspu/psi/utils:batch_provider",
+    ],
+)
+
+#bazel build //src/kernel/data_db:db_meta
+service_cc_library(
+    name = "db_meta",
+    srcs = ["db_meta.cc"],
+    hdrs = ["db_meta.h"],
+    deps = [
+        "batch_writer",
+        "sender_cacher",
+        "@spulib//libspu/psi/utils:batch_provider",
+        "//src/config:config",
+        "//src/util:mlflow_api",
+    ],
+)
+
+#bazel test //src/kernel/data_db:db_meta_test
+service_cc_test(
+    name = "db_meta_test",
+    srcs = ["db_meta_test.cc"],
+    deps = [
+        "db_meta",
+    ],
+)
+
+#bazel build //src/kernel/data_db:mega_batch
+service_cc_library(
+    name = "mega_batch",
+    srcs = ["mega_batch.cc"],
+    hdrs = ["mega_batch.h"],
+    deps = [
+        # "batch_writer",
+        "@com_github_fmtlib_fmt//:fmtlib"
+    ],
+)
+
+#bazel build //src/kernel/data_db:db_meta_info
+service_cc_library(
+    name = "db_meta_info",
+    srcs = ["db_meta_info.cc"],
+    hdrs = ["db_meta_info.h"],
+    deps = [
+        "mega_batch",
+        "time_profiler_cc_proto",
+        "@spulib//libspu/core:logging",
+    ],
+)
+
+#bazel test //src/kernel/data_db:db_meta_info_test
+service_cc_test(
+    name = "db_meta_info_test",
+    srcs = ["db_meta_info_test.cc"],
+    deps = [
+        "db_meta_info",
+    ],
+)
+
+#bazel build //src/kernel/data_db:data_cacher
+service_cc_library(
+    name = "data_cacher",
+    srcs = ["data_cacher.cc"],
+    hdrs = ["data_cacher.h"],
+    deps = [
+        "mega_batch",
+        "//src/pir:pir_fse_prama",
+        "@nvclouds_apsi//:apsi_lib",
+        "@yacl//yacl/io/rw:rw",
+        "@spulib//libspu/core:logging",
+    ],
+)
+
+#bazel test //src/kernel/data_db:data_cacher_test
+service_cc_test(
+    name = "data_cacher_test",
+    srcs = ["data_cacher_test.cc"],
+    deps = [
+        "data_cacher",
+        "batch_writer",
+    ],
+)
+
+#bazel build //src/kernel/data_db:sender_cacher
+service_cc_library(
+    name = "sender_cacher",
+    srcs = ["sender_cacher.cc"],
+    hdrs = ["sender_cacher.h"],
+    deps = [
+        "db_meta_info",
+        "data_cacher",
+        "@spulib//libspu/core:logging",
+    ],
+)
+
+#bazel build //src/kernel/data_db:db_client
+service_cc_library(
+    name = "db_client",
+    srcs = ["db_client.cc"],
+    hdrs = ["db_client.h"],
+    deps = [
+        "batch_writer",
+        "db_meta_info",
+        "time_profiler",
+        "//src/pir:pir_fse_prama",
+        "@yacl//yacl/io/rw:rw",
+        "@nvclouds_apsi//:apsi_lib",
+        "@spulib//libspu/core:logging",
+    ],
+)
+
+#bazel build //src/kernel/data_db:db_server
+service_cc_library(
+    name = "db_server",
+    srcs = ["db_server.cc"],
+    hdrs = ["db_server.h"],
+    deps = [
+        "db_meta",
+        "time_profiler",
+        "@nvclouds_apsi//:apsi_lib",
+        "@spulib//libspu/core:logging",
+    ],
+)
+
+#bazel test //src/kernel/data_db:db_server_client_test
+service_cc_test(
+    name = "db_server_client_test",
+    srcs = ["db_server_client_test.cc"],
+    deps = [
+        "db_server",
+        "db_client",
+        "batch_writer",
+    ],
+)
+
+#bazel build //src/kernel/data_db:pir_service_proto
+proto_library(
+    name = "time_profiler_proto",
+    srcs = ["time_profiler.proto"],
+)
+
+#bazel build //src/kernel/data_db:time_profiler_cc_proto
+cc_proto_library(
+    name = "time_profiler_cc_proto",
+    deps = [":time_profiler_proto"],
+)
+
+
+#bazel build //src/kernel/data_db:time_profiler
+service_cc_library(
+    name = "time_profiler",
+    srcs = ["time_profiler.cc"],
+    hdrs = ["time_profiler.h"],
+    deps = [
+        "@com_github_fmtlib_fmt//:fmtlib",
+        ":time_profiler_cc_proto",
+    ],
+)
